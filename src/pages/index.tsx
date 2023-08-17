@@ -37,11 +37,11 @@ export default function Home() {
   });
 
   const bundler: IBundler = new Bundler({
-    bundlerUrl: 'https://paymaster.biconomy.io/api/v1/8453/rUpglMMDA.affd19a9-9f16-432c-bd64-a1d5407a865e',    
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/8453/nYCC7B3fu.dd7f7861-190d-41bd-af80-6877f74b8f44',    
     chainId: ChainId.BASE_MAINNET,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
-  
+  // polygon paymaster: https://paymaster.biconomy.io/api/v1/137/u2tMy61_L.22152d61-064b-40f9-9e6a-4ac445cf5d3d
   const paymaster: IPaymaster = new BiconomyPaymaster({
     paymasterUrl: 'https://paymaster.biconomy.io/api/v1/8453/rUpglMMDA.affd19a9-9f16-432c-bd64-a1d5407a865e' 
   })

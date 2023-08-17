@@ -9,8 +9,9 @@ import {
   PaymasterMode
 } from '@biconomy/paymaster'
 import styles from '@/styles/Home.module.css'
-
-const nftAddress = "0x0a7755bDfb86109D9D403005741b415765EAf1Bc"
+// polygon address - 0x0a7755bDfb86109D9D403005741b415765EAf1Bc
+// base address - 0xb62B65Ab405768BbF71Adf1dD98e26ecEdD3F903
+const nftAddress = "0xb62B65Ab405768BbF71Adf1dD98e26ecEdD3F903"
 
 const Minter = ({ smartAccount, address, provider }:any) => {
   // const [nftContract, setNFTContract] = useState({})
@@ -49,12 +50,33 @@ const Minter = ({ smartAccount, address, provider }:any) => {
         smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        calculateGasLimits: true,
       };
+      console.log("before paymasterserviedata")
       const paymasterAndDataResponse =
         await biconomyPaymaster.getPaymasterAndData(
           userOp,
           paymasterServiceData
         );
+        console.log("paymasterAndDataResponse: ", paymasterAndDataResponse)
+        if (
+          paymasterAndDataResponse.callGasLimit &&
+          paymasterAndDataResponse.verificationGasLimit &&
+          paymasterAndDataResponse.preVerificationGas
+        ) {
+          console.log("hello from if")
+          // Returned gas limits must be replaced in your op as you update paymasterAndData.
+          // Because these are the limits paymaster service signed on to generate paymasterAndData
+          // If you receive AA34 error check here..   
+          userOp.callGasLimit = paymasterAndDataResponse.callGasLimit;
+          userOp.verificationGasLimit =
+            paymasterAndDataResponse.verificationGasLimit;
+          userOp.preVerificationGas =
+            paymasterAndDataResponse.preVerificationGas;
+        }
+      console.log("after if")
+      console.log({ userOp })
+      console.log({paymasterAndDataResponse})
       userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
       const userOpResponse = await smartAccount.sendUserOp(userOp);
       console.log("userOpHash", userOpResponse);

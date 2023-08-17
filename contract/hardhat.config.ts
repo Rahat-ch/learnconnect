@@ -8,28 +8,15 @@ const config: HardhatUserConfig = {
     version: '0.8.1',
   },
   networks: {
-    // for mainnet
-    'base-mainnet': {
-      url: 'https://mainnet.base.org',
-      accounts: [process.env.WALLET_KEY as string],
-      gasPrice: 1000000000,
-    },
-    // for testnet
-    'base-goerli': {
-      url: 'https://goerli.base.org',
-      accounts: [process.env.WALLET_KEY as string],
-      gasPrice: 1000000000,
-    },
-    // for local dev environment
-    'base-local': {
-      url: 'http://localhost:8545',
-      accounts: [process.env.WALLET_KEY as string],
-      gasPrice: 1000000000,
+    polygon: {
+      url: "https://rpc.ankr.com/polygon",
+      accounts: ["83ad2579e0162864ba0b48f217bdaba43c6020a79fcbe456fe736c524bbaa8d5"],
     },
   },
   etherscan: {
     apiKey: {
-     "base": "TJTXV9XQWFS8MYUPTZVM5TDWWUGHHHF3C9"
+     "base": "TJTXV9XQWFS8MYUPTZVM5TDWWUGHHHF3C9",
+     polygon: "4Y4Q9JH8J1XWV4RTG5JSED36MR26VDT1P2",
     },
     customChains: [
       {
